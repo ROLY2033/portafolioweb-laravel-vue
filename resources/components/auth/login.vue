@@ -1,7 +1,7 @@
 <script setup>
     import { reactive, ref } from 'vue';
     import axios from 'axios';
-import router from '../router';
+    import router from '../router';
 
     let form = reactive({
         'email': '',
@@ -13,10 +13,11 @@ import router from '../router';
             await axios.post('/api/login', form).then(response =>{
             if(response.data.success){
                 localStorage.setItem('token', response.data.data.token)
-                router.push('/admin/home')
+                router.push('/admin')
             }else{
                 errors.value = response.data.message
             }
+
             })
     }
 </script>

@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createMemoryHistory, createRouter, createWebHashHistory, createWebHistory } from "vue-router";
 // admin
 import homeAdminIndex from "../admin/home/index.vue"
 // pages
@@ -10,26 +10,54 @@ import notFound from "../notFound.vue"
 
 const routes = [
     {
-        path: '/admin/home',
-        component: homeAdminIndex
+        path: '/admin',
+        name: 'adminHome',
+        component: homeAdminIndex,
+        meta:{
+            requiresAuth: true,
+        }
     },
     {
         path: '/',
-        component: homePageIndex
+        name: 'Home',
+        component: homePageIndex,
+        meta:{
+            requiresAuth: false,
+        }
     },
     {
         path: '/:pathMatch(.*)*',
-        component: notFound
+        name: 'notFound',
+        component: notFound,
+        meta:{
+            requiresAuth: false,
+        }
     },
     {
         path: '/login',
-        component:  login
+        name: 'Login',
+        component:  login,
+        meta:{
+            requiresAuth: false,
+        }
     }
 ]
 
 const router = createRouter({
+    // utilizar el metodo Hash para que al momento de erealizar un actulizacion no se refresque
+    // la ruta
     history: createWebHistory(),
     routes
+})
+
+router.beforeEach((to,from) =>{
+    if(to.meta.requiresAuth && !localStorage.getItem('token')){
+        return {name: 'Login'}
+    }
+    // if(to.meta.requiresAuth == false && localStorage.getItem('token')){
+    //     return {path: '/*'}
+    // }
+
 })
 
 export default router
