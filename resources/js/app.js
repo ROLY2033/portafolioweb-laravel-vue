@@ -1,4 +1,5 @@
 import './bootstrap';
+import '../css/bootstrap.css'
 
 import { createApp } from 'vue'
 // no coloar en ./ solo / para la ruta inicial

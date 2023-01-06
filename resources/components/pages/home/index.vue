@@ -7,5 +7,9 @@
             Admin Dashboard
         </RouterLink>
     </div>
-
+    <div>
+        <RouterLink to="/login" >
+            Login
+        </RouterLink>
+    </div>
 </template>
